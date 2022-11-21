@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "501411603832",
+    "project_id": "justdoit-248ab",
+    "storage_bucket": "justdoit-248ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501411603832:android:fed6398fb65a5f1ae3d48d",
+        "android_client_info": {
+          "package_name": "com.example.justdoit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501411603832-tg5785pjdumnfalmlcupe5t5q8om3fce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfuVejNqv1sh_TAlCQXfM2-BE81ZdrAqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501411603832-tg5785pjdumnfalmlcupe5t5q8om3fce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
