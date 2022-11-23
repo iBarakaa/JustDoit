@@ -5,17 +5,67 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.example.justdoit.R
+import com.example.justdoit.databinding.FragmentSignUpBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 
 
 class SignUpFragment : Fragment() {
+
+    private lateinit var auth:FirebaseAuth //firebase authentication
+    private lateinit var navControl:NavController //navigate through different fragments
+    private lateinit var binding: FragmentSignUpBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
+        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init(view)
+        registerEvents()
+    }
+
+    private fun init(view: View){
+        navControl = Navigation.findNavController(view)
+        auth = FirebaseAuth.getInstance()
+    }
+
+    private fun registerEvents(){
+
+        binding.authTextView.setOnClickListener {
+            navControl.navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
+
+        binding.nextBtn.setOnClickListener {     //collect strings from our edit texts
+            val email = binding.emailEt.text.toString().trim()
+            val pass = binding.passEt.text.toString().trim()
+            val verifyPass = binding.repassEt.text.toString().trim()
+
+            if(email.isNotEmpty() && pass.isNotEmpty() && verifyPass.isNotEmpty()){
+                if(pass == verifyPass){
+                    auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(
+                        OnCompleteListener {
+                            if (it.isSuccessful){
+                                Toast.makeText(context , "Registered Successfully" , Toast.LENGTH_SHORT).show()
+                                navControl.navigate(R.id.action_signUpFragment_to_homeFragment2) //upon successful registration the user is directed to the home fragment
+                            }else{
+                                Toast.makeText(context , it.exception?.message , Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                }
+            }
+        }
     }
 
 }
