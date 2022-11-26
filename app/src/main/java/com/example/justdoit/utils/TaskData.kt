@@ -1,3 +1,3 @@
 package com.example.justdoit.utils
 
-data class TaskData(var tId:String , var task:String)
+data class TaskData(var taskId:String , var task:String)

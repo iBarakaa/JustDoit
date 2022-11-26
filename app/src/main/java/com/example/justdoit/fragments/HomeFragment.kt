@@ -60,8 +60,8 @@ class HomeFragment : Fragment(), AddTaskPopUpFragment.DialogNextBtnClickListener
     private fun init(view: View){
         navController = Navigation.findNavController(view)
         auth = FirebaseAuth.getInstance()
-        databaseRef = FirebaseDatabase.getInstance().reference.child("Tasks")
-            .child(auth.currentUser?.uid.toString())
+        databaseRef = FirebaseDatabase.getInstance().reference
+            .child("Tasks").child(auth.currentUser?.uid.toString())
 
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
@@ -109,7 +109,13 @@ class HomeFragment : Fragment(), AddTaskPopUpFragment.DialogNextBtnClickListener
     }
 
     override fun onDeleteTaskBtnClicked(taskData: TaskData) {
-        //databaseRef.child(TaskData.tId).removeValue().addOnCompleteListener()
+        databaseRef.child(taskData.taskId).removeValue().addOnCompleteListener{
+            if (it.isSuccessful) {
+                Toast.makeText(context , "Deleted Successfully" , Toast.LENGTH_SHORT).show()
+            }else {
+                Toast.makeText(context , it.exception?.message , Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onEditTaskBtnClicked(taskData: TaskData) {
